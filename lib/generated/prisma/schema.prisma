@@ -1,0 +1,63 @@
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../lib/generated/prisma"
+  binaryTargets = ["native", "debian-openssl-1.1.x", "darwin", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model bible_verses_hcv {
+  id      Int    @id @default(autoincrement())
+  book    Int    @db.SmallInt
+  chapter Int    @db.SmallInt
+  verse   Int    @db.SmallInt
+  text    String
+
+  @@index([book], map: "ixb_hcv")
+  @@index([book, chapter, verse], map: "ixbcv_hcv")
+  @@index([chapter], map: "ixc_hcv")
+  @@index([verse], map: "ixv_hcv")
+}
+
+model bible_verses_kjv {
+  id      Int    @id @default(autoincrement())
+  book    Int    @db.SmallInt
+  chapter Int    @db.SmallInt
+  verse   Int    @db.SmallInt
+  text    String
+
+  @@index([book], map: "ix_book")
+  @@index([book, chapter, verse], map: "ix_book_chapter_verse")
+  @@index([chapter], map: "ix_chapter")
+  @@index([verse], map: "ix_verse")
+}
+
+model bible_verses_rvg {
+  id      Int    @id @default(autoincrement())
+  book    Int    @db.SmallInt
+  chapter Int    @db.SmallInt
+  verse   Int    @db.SmallInt
+  text    String
+
+  @@index([book], map: "ixb_rvg")
+  @@index([book, chapter, verse], map: "ixbcv_rvg")
+  @@index([chapter], map: "ixc_rvg")
+  @@index([verse], map: "ixv_rvg")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model bible_verses_segond_1910 {
+  id      Int    @id @default(autoincrement())
+  book    Int    @db.SmallInt
+  chapter Int    @db.SmallInt
+  verse   Int    @db.SmallInt
+  text    String
+
+  @@index([book], map: "ixb_segond_1910")
+  @@index([book, chapter, verse], map: "ixbcv_segond_1910")
+  @@index([chapter], map: "ixc_segond_1910")
+  @@index([verse], map: "ixv_segond_1910")
+}

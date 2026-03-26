@@ -1,0 +1,74 @@
+@import 'tailwindcss';
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+}
+
+@plugin "daisyui/theme" {
+  name: 'light';
+  default: true;
+  prefersdark: false;
+  color-scheme: 'light';
+  --color-base-100: oklch(97% 0.01 90); /* Warm off-white */
+  --color-base-200: oklch(94% 0.01 90);
+  --color-base-300: oklch(90% 0.01 90);
+  --color-base-content: oklch(20% 0.03 260); /* Deep navy text */
+  --color-primary: oklch(78% 0.12 75); /* Golden yellow (logo gold) */
+  --color-primary-content: oklch(20% 0.03 260); /* Navy text over gold */
+  --color-secondary: oklch(83% 0.11 85); /* Brighter gold accent */
+  --color-secondary-content: oklch(20% 0.03 260);
+  --color-accent: oklch(72% 0.1 60); /* Warm highlight */
+  --color-accent-content: oklch(20% 0.03 260);
+  --color-neutral: oklch(20% 0.03 260); /* Deep navy for contrast elements */
+  --color-neutral-content: oklch(95% 0.01 90); /* Light text on dark backgrounds */
+  --color-info: oklch(55% 0.1 230);
+  --color-success: oklch(60% 0.12 145);
+  --color-warning: oklch(70% 0.14 80);
+  --color-error: oklch(55% 0.14 25);
+  --color-info-content: oklch(98% 0.01 90);
+  --color-success-content: oklch(98% 0.01 90);
+  --color-warning-content: oklch(98% 0.01 90);
+  --color-error-content: oklch(98% 0.01 90);
+  --radius-selector: 1rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0.2;
+  --noise: 0;
+}
+
+@plugin "daisyui/theme" {
+  name: 'dark';
+  default: false;
+  prefersdark: true;
+  color-scheme: 'dark';
+  --color-base-100: oklch(15% 0.02 260); /* Deep navy background */
+  --color-base-200: oklch(20% 0.02 260);
+  --color-base-300: oklch(25% 0.02 260);
+  --color-base-content: oklch(90% 0.02 85); /* Light gold text */
+  --color-primary: oklch(78% 0.12 75); /* Golden yellow (from logo) */
+  --color-primary-content: oklch(20% 0.02 260);
+  --color-secondary: oklch(83% 0.11 85); /* Slightly brighter gold for accents */
+  --color-secondary-content: oklch(20% 0.02 260);
+  --color-accent: oklch(70% 0.1 60); /* Warm golden highlight */
+  --color-accent-content: oklch(20% 0.02 260);
+  --color-neutral: oklch(18% 0.02 260);
+  --color-neutral-content: oklch(90% 0.02 85);
+  --color-info: oklch(70% 0.13 230);
+  --color-success: oklch(75% 0.12 145);
+  --color-warning: oklch(80% 0.14 80);
+  --color-error: oklch(70% 0.15 25);
+  --color-info-content: oklch(15% 0.02 260);
+  --color-success-content: oklch(15% 0.02 260);
+  --color-warning-content: oklch(15% 0.02 260);
+  --color-error-content: oklch(15% 0.02 260);
+  --radius-selector: 1rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0.5;
+  --noise: 0.1;
+}

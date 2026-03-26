@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+  schemas  = ["24hbible"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model bible_verses_hcv {
+  id      BigInt @id(map: "idx_16596_primary") @default(autoincrement())
+  book    Int    @db.SmallInt
+  chapter Int    @db.SmallInt
+  verse   Int    @db.SmallInt
+  text    String
+
+  @@index([book], map: "idx_16596_ixb")
+  @@index([book, chapter, verse], map: "idx_16596_ixbcv")
+  @@index([chapter], map: "idx_16596_ixc")
+  @@index([verse], map: "idx_16596_ixv")
+}
+
+model bible_verses_kjv {
+  id      BigInt @id(map: "idx_16608_primary") @default(autoincrement())
+  book    Int    @db.SmallInt
+  chapter Int    @db.SmallInt
+  verse   Int    @db.SmallInt
+  text    String
+
+  @@index([book], map: "idx_16608_ixb")
+  @@index([book, chapter, verse], map: "idx_16608_ixbcv")
+  @@index([chapter], map: "idx_16608_ixc")
+  @@index([verse], map: "idx_16608_ixv")
+}
+
+model bible_verses_rvg {
+  id      BigInt @id(map: "idx_16620_primary") @default(autoincrement())
+  book    Int    @db.SmallInt
+  chapter Int    @db.SmallInt
+  verse   Int    @db.SmallInt
+  text    String
+
+  @@index([book], map: "idx_16620_ixb")
+  @@index([book, chapter, verse], map: "idx_16620_ixbcv")
+  @@index([chapter], map: "idx_16620_ixc")
+  @@index([verse], map: "idx_16620_ixv")
+}
+
+model bible_verses_segond_1910 {
+  id      BigInt @id(map: "idx_16632_primary") @default(autoincrement())
+  book    Int    @db.SmallInt
+  chapter Int    @db.SmallInt
+  verse   Int    @db.SmallInt
+  text    String
+
+  @@index([book], map: "idx_16632_ixb")
+  @@index([book, chapter, verse], map: "idx_16632_ixbcv")
+  @@index([chapter], map: "idx_16632_ixc")
+  @@index([verse], map: "idx_16632_ixv")
+}
