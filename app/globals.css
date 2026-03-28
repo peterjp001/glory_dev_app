@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark;
+  themes:
+    light --default,
+    dark --prefersdark;
 }
 
 @plugin "daisyui/theme" {
@@ -36,6 +38,7 @@
   --border: 1px;
   --depth: 0.2;
   --noise: 0;
+  --grid-line-color: rgba(0, 0, 0, 0.1); /* dark lines on light */
 }
 
 @plugin "daisyui/theme" {
@@ -71,4 +74,25 @@
   --border: 1px;
   --depth: 0.5;
   --noise: 0.1;
+  --grid-line-color: rgba(255, 255, 255, 0.1); /* light lines on dark */
+}
+
+@layer base {
+  body {
+    background-color: var(--color-base-100);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid-line-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line-color) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
 }

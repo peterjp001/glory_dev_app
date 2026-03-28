@@ -1,5 +1,5 @@
 {
-  "name": "24hbible",
+  "name": "glory_dev_app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,10 +11,9 @@
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.5.0",
-    "@prisma/client": "^6.19.2",
+    "@prisma/client": "^7.5.0",
     "@prisma/extension-accelerate": "^2.0.2",
     "@prisma/nextjs-monorepo-workaround-plugin": "^6.19.0",
-    "dotenv": "^17.3.1",
     "lucide-react": "^0.552.0",
     "next": "^16.2.1",
     "next-themes": "^0.4.6",
@@ -30,6 +29,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "daisyui": "^5.4.3",
+    "dotenv": "^17.3.1",
     "eslint": "^9",
     "eslint-config-next": "16.0.0",
     "prisma": "^7.5.0",
