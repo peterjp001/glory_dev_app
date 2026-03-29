@@ -8,53 +8,55 @@ datasource db {
 }
 
 model bible_verses_hcv {
-  id      BigInt @id(map: "idx_16596_primary") @default(autoincrement())
+  id      BigInt @id
   book    Int    @db.SmallInt
   chapter Int    @db.SmallInt
   verse   Int    @db.SmallInt
   text    String
 
-  @@index([book], map: "idx_16596_ixb")
-  @@index([book, chapter, verse], map: "idx_16596_ixbcv")
-  @@index([chapter], map: "idx_16596_ixc")
-  @@index([verse], map: "idx_16596_ixv")
+  @@index([book, chapter, verse], map: "idx_hcv_bcv")
+  @@index([book], map: "idx_hcv_book")
 }
 
 model bible_verses_kjv {
-  id      BigInt @id(map: "idx_16608_primary") @default(autoincrement())
+  id      BigInt @id
   book    Int    @db.SmallInt
   chapter Int    @db.SmallInt
   verse   Int    @db.SmallInt
   text    String
 
-  @@index([book], map: "idx_16608_ixb")
-  @@index([book, chapter, verse], map: "idx_16608_ixbcv")
-  @@index([chapter], map: "idx_16608_ixc")
-  @@index([verse], map: "idx_16608_ixv")
+  @@index([book, chapter, verse], map: "idx_kjv_bcv")
+  @@index([book], map: "idx_kjv_book")
 }
 
 model bible_verses_rvg {
-  id      BigInt @id(map: "idx_16620_primary") @default(autoincrement())
+  id      BigInt @id
   book    Int    @db.SmallInt
   chapter Int    @db.SmallInt
   verse   Int    @db.SmallInt
   text    String
 
-  @@index([book], map: "idx_16620_ixb")
-  @@index([book, chapter, verse], map: "idx_16620_ixbcv")
-  @@index([chapter], map: "idx_16620_ixc")
-  @@index([verse], map: "idx_16620_ixv")
+  @@index([book, chapter, verse], map: "idx_rvg_bcv")
+  @@index([book], map: "idx_rvg_book")
 }
 
 model bible_verses_segond_1910 {
-  id      BigInt @id(map: "idx_16632_primary") @default(autoincrement())
+  id      BigInt @id
   book    Int    @db.SmallInt
   chapter Int    @db.SmallInt
   verse   Int    @db.SmallInt
   text    String
 
-  @@index([book], map: "idx_16632_ixb")
-  @@index([book, chapter, verse], map: "idx_16632_ixbcv")
-  @@index([chapter], map: "idx_16632_ixc")
-  @@index([verse], map: "idx_16632_ixv")
+  @@index([book, chapter, verse], map: "idx_seg_bcv")
+  @@index([book], map: "idx_seg_book")
+}
+
+model reading_plan {
+  id       Int  @id @db.SmallInt
+  year     Int  @db.SmallInt
+  day      Int  @db.SmallInt
+  month    Int  @db.SmallInt
+  readings Json
+
+  @@index([year, month, day], map: "idx_reading_plan_lookup")
 }

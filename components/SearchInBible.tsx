@@ -61,7 +61,7 @@ const SearchInBible = () => {
         onClick={handleStartReading}
         disabled={!book || !chapter}
       >
-        Start Reading
+        Lire{' '}
       </button>
     </div>
   );
