@@ -26,7 +26,7 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: {
     default: '24h Bible — Tabernacle de Gloire',
-    template: '%s ',
+    template: '%s | 24h Bible',
   },
   description:
     'Suivez le plan de lecture biblique annuel de Tabernacle de Gloire. Lisez, méditez et soumettez vos dévotions quotidiennes.',
