@@ -2,26 +2,30 @@
 
 import React, { useRef, useEffect } from 'react';
 import DevotionForm from './DevotionForm';
+import { PenBoxIcon } from 'lucide-react';
 
 const ModalDevotion = () => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
     const handleResize = () => {
-      // 1024px is the default Tailwind 'lg' breakpoint
       if (window.innerWidth >= 1024 && dialogRef.current?.open) {
         dialogRef.current.close();
       }
     };
-
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return (
     <>
-      <button className='btn btn-primary btn-sm' onClick={() => dialogRef.current?.showModal()}>
-        Soumettre Dévotion
+      {/* FAB trigger — mobile only */}
+      <button
+        onClick={() => dialogRef.current?.showModal()}
+        className='fixed bottom-20 right-8 z-50 btn btn-xs btn-primary shadow-lg lg:hidden'
+        aria-label='Soumettre ma dévotion'
+      >
+        <PenBoxIcon className='w-5 h-5' /> Devotion
       </button>
 
       <dialog ref={dialogRef} className='modal modal-center sm:modal-middle'>
@@ -30,7 +34,12 @@ const ModalDevotion = () => {
           <div className='sticky top-0 z-10 flex items-center justify-between px-5 py-4 bg-base-100 border-b border-base-content/10'>
             <div>
               <p className='text-[11px] font-medium tracking-widest uppercase text-base-content/40'>
-                Vendredi 3 avril 2026
+                {new Date().toLocaleDateString('fr-FR', {
+                  weekday: 'long',
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric',
+                })}
               </p>
               <h3 className='font-serif text-lg font-medium text-base-content'>Ma dévotion</h3>
             </div>
@@ -48,7 +57,6 @@ const ModalDevotion = () => {
           </div>
         </div>
 
-        {/* Important: use the form method="dialog" for the backdrop click to be safe */}
         <form method='dialog' className='modal-backdrop'>
           <button>close</button>
         </form>
