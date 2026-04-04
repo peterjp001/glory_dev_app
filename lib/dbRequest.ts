@@ -132,3 +132,43 @@ export async function fetchCreoleBibleVersion(params: { book: number; chapter: n
 
   return res;
 }
+
+
+
+export interface ReadingEntry {
+  book_number: number;
+  chapter_start: number;
+  chapter_end: number;
+  verse_start: number | null;
+  verse_end: number | null;
+}
+
+export interface TodayPlan {
+  id: number;
+  year: number;
+  day: number;
+  month: number;
+  readings: ReadingEntry[];
+}
+
+export async function getTodayReadingPlan(): Promise<TodayPlan | null> {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1; // getMonth() is 0-indexed
+  const day = now.getDate();
+
+  const result = await db.reading_plan.findFirst({
+    where: { year, month, day },
+  });
+
+  if (!result) return null;
+
+  return {
+    id: result.id,
+    year: result.year,
+    day: result.day,
+    month: result.month,
+    readings: result.readings as unknown as ReadingEntry[],
+  };
+}
+

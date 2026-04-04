@@ -1,7 +1,5 @@
-import SearchInBible from '@/components/SearchInBible';
+import SearchInBible from '@/components/bible/SearchInBible';
 import { getReadingRequest } from '@/lib/dbRequest';
-
-
 
 export default async function Page({
   searchParams,
@@ -30,8 +28,6 @@ export default async function Page({
 
       <div className='w-full max-w-3xl mt-6 bg-base-200 rounded-2xl shadow-md p-6 flex-1'>
         <div className='text-base text-base-content/80'>
-        
-
           {/* Versets */}
           <div className='space-y-4'>
             {res?.scripture &&

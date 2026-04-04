@@ -4,7 +4,7 @@ import MenuItem from './MenuItem';
 const NavbarListItems = () => {
   return (
     <>
-      <MenuItem href='/' label='Accueil' />
+      <MenuItem href='/' label='Devotion' />
       <MenuItem href='/bible' label='La Bible' />
       <MenuItem href='/plan' label='Mes Plans' />
       <MenuItem href='/about' label='À Propos' />
