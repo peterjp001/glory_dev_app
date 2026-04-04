@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   keywords: ['Bible', 'dévotions', 'plan de lecture', 'Tabernacle de Gloire', 'lecture biblique'],
   authors: [{ name: 'Tabernacle de Gloire' }],
   creator: 'Tabernacle de Gloire',
-  metadataBase: new URL('https://24hbible.vercel.app/'), // à ajuster
+  metadataBase: new URL('https://24hbible.vercel.app'),
   openGraph: {
     title: '24h Bible — Tabernacle de Gloire',
     description:
@@ -43,6 +43,7 @@ export const metadata: Metadata = {
     locale: 'fr_FR',
     alternateLocale: ['en_US', 'ht_HT', 'es_ES'],
     type: 'website',
+    images: [{ url: '/img/24hbible-1logo.png' }],
   },
 };
 
