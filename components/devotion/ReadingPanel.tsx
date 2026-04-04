@@ -22,7 +22,7 @@ export function ReadingPanel({ tabs }: { tabs: TabData[] }) {
     <div className='max-w-2xl'>
       {/* Tab bar and Controls */}
       <div className='sticky top-20 z-10 flex flex-row items-start justify-between mb-8'>
-        <div className='flex gap-1.5 p-1.5 bg-base-200 rounded-xl w-fit overflow-x-auto'>
+        <div className='flex gap-1.5 p-1.5 bg-base-200 rounded-xl w-fit overflow-x-auto mr-5'>
           {tabs.map((tab, i) => (
             <button
               key={tab.label}

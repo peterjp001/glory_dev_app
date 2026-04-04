@@ -8,7 +8,7 @@ const page = async () => {
 
   return (
     <div className='max-w-6xl mx-auto'>
-      <div className='sticky top-0 z-20 bg-base-100/80 backdrop-blur-md border-b border-base-content/5 mb-6'>
+      <div className='sticky top-0 z-10 bg-base-100/80 backdrop-blur-md border-b border-base-content/5 mb-6'>
         <div className='flex items-center justify-between py-4'>
           <h1 className='font-serif text-xl font-semibold text-base-content flex items-baseline gap-3'>
             Lecture du jour

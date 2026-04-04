@@ -38,7 +38,7 @@ const Navbar = () => {
             tabIndex={0}
             className='
                 menu menu-sm dropdown-content 
-                mt-6 z-1 p-2 
+                mt-6 z-20 p-2 
                 shadow bg-base-100 
                 dark:bg-base-300 
                 rounded-box w-52
