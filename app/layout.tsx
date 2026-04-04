@@ -24,8 +24,26 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: '24h Bible',
-  description: 'Read the Bible in your own schedule.',
+  title: {
+    default: '24h Bible — Tabernacle de Gloire',
+    template: '%s ',
+  },
+  description:
+    'Suivez le plan de lecture biblique annuel de Tabernacle de Gloire. Lisez, méditez et soumettez vos dévotions quotidiennes.',
+  applicationName: '24h Bible',
+  keywords: ['Bible', 'dévotions', 'plan de lecture', 'Tabernacle de Gloire', 'lecture biblique'],
+  authors: [{ name: 'Tabernacle de Gloire' }],
+  creator: 'Tabernacle de Gloire',
+  metadataBase: new URL('https://24hbible.vercel.app/'), // à ajuster
+  openGraph: {
+    title: '24h Bible — Tabernacle de Gloire',
+    description:
+      'Suivez le plan de lecture biblique annuel de Tabernacle de Gloire. Lisez, méditez et soumettez vos dévotions quotidiennes.',
+    siteName: '24h Bible',
+    locale: 'fr_FR',
+    alternateLocale: ['en_US', 'ht_HT', 'es_ES'],
+    type: 'website',
+  },
 };
 
 export default function RootLayout({
