@@ -1,6 +1,7 @@
 'use server';
 
 import db from './prisma';
+import { BibleBooksDict, BibleBooksDictType } from './bbService';
 
 interface Verse {
   verse: number;
@@ -45,19 +46,12 @@ export async function fetchFrenchBibleVersion(params: { book: number; chapter: n
     orderBy: { verse: 'asc' },
   });
 
-  // Convert array to an object keyed by verse number
   const scripture: Record<number, Verse> = {};
   verses.forEach((v) => {
     scripture[v.verse] = v;
   });
 
-  const res: BibleResponse = {
-    book: params.book,
-    chapter: params.chapter,
-    scripture,
-  };
-
-  return res;
+  return { book: params.book, chapter: params.chapter, scripture };
 }
 
 export async function fetchEnglishBibleVersion(params: { book: number; chapter: number }) {
@@ -70,20 +64,14 @@ export async function fetchEnglishBibleVersion(params: { book: number; chapter: 
     orderBy: { verse: 'asc' },
   });
 
-  // Convert array to an object keyed by verse number
   const scripture: Record<number, Verse> = {};
   verses.forEach((v) => {
     scripture[v.verse] = v;
   });
 
-  const res: BibleResponse = {
-    book: params.book,
-    chapter: params.chapter,
-    scripture,
-  };
-
-  return res;
+  return { book: params.book, chapter: params.chapter, scripture };
 }
+
 export async function fetchSpanishBibleVersion(params: { book: number; chapter: number }) {
   const verses: Verse[] = await db.bible_verses_rvg.findMany({
     select: { verse: true, text: true },
@@ -94,20 +82,14 @@ export async function fetchSpanishBibleVersion(params: { book: number; chapter: 
     orderBy: { verse: 'asc' },
   });
 
-  // Convert array to an object keyed by verse number
   const scripture: Record<number, Verse> = {};
   verses.forEach((v) => {
     scripture[v.verse] = v;
   });
 
-  const res: BibleResponse = {
-    book: params.book,
-    chapter: params.chapter,
-    scripture,
-  };
-
-  return res;
+  return { book: params.book, chapter: params.chapter, scripture };
 }
+
 export async function fetchCreoleBibleVersion(params: { book: number; chapter: number }) {
   const verses: Verse[] = await db.bible_verses_hcv.findMany({
     select: { verse: true, text: true },
@@ -118,22 +100,13 @@ export async function fetchCreoleBibleVersion(params: { book: number; chapter: n
     orderBy: { verse: 'asc' },
   });
 
-  // Convert array to an object keyed by verse number
   const scripture: Record<number, Verse> = {};
   verses.forEach((v) => {
     scripture[v.verse] = v;
   });
 
-  const res: BibleResponse = {
-    book: params.book,
-    chapter: params.chapter,
-    scripture,
-  };
-
-  return res;
+  return { book: params.book, chapter: params.chapter, scripture };
 }
-
-
 
 export interface ReadingEntry {
   book_number: number;
@@ -154,7 +127,7 @@ export interface TodayPlan {
 export async function getTodayReadingPlan(): Promise<TodayPlan | null> {
   const now = new Date();
   const year = now.getFullYear();
-  const month = now.getMonth() + 1; // getMonth() is 0-indexed
+  const month = now.getMonth() + 1;
   const day = now.getDate();
 
   const result = await db.reading_plan.findFirst({
@@ -172,3 +145,69 @@ export async function getTodayReadingPlan(): Promise<TodayPlan | null> {
   };
 }
 
+// ─── New additions ────────────────────────────────────────────────────────────
+
+export type TabData = {
+  label: string;
+  content: { verse: number; text: string }[];
+};
+
+export async function getChapterVerses(
+  book: number,
+  chapter: number,
+  lang: string,
+  verseStart?: number,
+  verseEnd?: number,
+): Promise<{ verse: number; text: string }[]> {
+  const where = {
+    book: Number(book),
+    chapter: Number(chapter),
+    ...(verseStart !== undefined && verseEnd !== undefined
+      ? { verse: { gte: verseStart, lte: verseEnd } }
+      : {}),
+  };
+
+  const select = { verse: true, text: true };
+  const orderBy = { verse: 'asc' as const };
+
+  if (lang === 'en') return db.bible_verses_kjv.findMany({ select, where, orderBy });
+  if (lang === 'es') return db.bible_verses_rvg.findMany({ select, where, orderBy });
+  if (lang === 'ht') return db.bible_verses_hcv.findMany({ select, where, orderBy });
+  return db.bible_verses_segond_1910.findMany({ select, where, orderBy }); // 'fr' + default
+}
+
+export async function getTodayTabs(lang: string = 'fr'): Promise<TabData[]> {
+  const plan = await getTodayReadingPlan();
+  if (!plan) return [];
+
+  const bookDict = BibleBooksDict[lang as keyof BibleBooksDictType] ?? BibleBooksDict['fr'];
+  const tabs: TabData[] = [];
+
+  for (const entry of plan.readings) {
+    const bookName = bookDict[entry.book_number]?.name ?? `Livre ${entry.book_number}`;
+    const isSingleChapter = entry.chapter_start === entry.chapter_end;
+
+    if (isSingleChapter) {
+      const label =
+        entry.verse_start !== null
+          ? `${bookName} ${entry.chapter_start}.${entry.verse_start}-${entry.verse_end}`
+          : `${bookName} ${entry.chapter_start}`;
+
+      const content = await getChapterVerses(
+        entry.book_number,
+        entry.chapter_start,
+        lang,
+        entry.verse_start ?? undefined,
+        entry.verse_end ?? undefined,
+      );
+      tabs.push({ label, content });
+    } else {
+      for (let ch = entry.chapter_start; ch <= entry.chapter_end; ch++) {
+        const content = await getChapterVerses(entry.book_number, ch, lang);
+        tabs.push({ label: `${bookName} ${ch}`, content });
+      }
+    }
+  }
+
+  return tabs;
+}

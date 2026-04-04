@@ -44,12 +44,12 @@ const DevotionForm = ({ bare = false }: { bare?: boolean }) => {
             name={key} // Crucial: This identifies the data in the Server Action
             rows={rows}
             placeholder={placeholder}
-            className='textarea textarea-ghost bg-base-200 w-full resize-none text-sm leading-relaxed focus:outline-none placeholder:text-base-content/30'
+            className='textarea textarea-ghost bg-base-200 w-full text-sm leading-relaxed focus:outline-none placeholder:text-base-content/30'
             required
           />
         </div>
       ))}
-      <button type='submit' className='btn btn-primary btn-sm w-full'>
+      <button type='submit' className='btn btn-primary btn-md w-full'>
         Soumettre
       </button>
     </form>
@@ -59,7 +59,7 @@ const DevotionForm = ({ bare = false }: { bare?: boolean }) => {
 
   return (
     <div className=' flex flex-col '>
-      <p className='text-md font-medium tracking-widest uppercase '>Ma dévotion</p>
+      <h2 className='text-sm font-bold mb-4 opacity-50 uppercase tracking-widest'>Ma Dévotion</h2>{' '}
       {content}
     </div>
   );

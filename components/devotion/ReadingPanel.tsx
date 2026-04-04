@@ -1,85 +1,86 @@
 'use client';
 
 import { useState } from 'react';
+import type { TabData } from '@/lib/dbRequest';
 
-const tabs = [
-  {
-    label: 'Genèse 1',
-    content: [
-      { verse: 1, text: 'Au commencement, Dieu créa les cieux et la terre.' },
-      {
-        verse: 2,
-        text: "La terre était informe et vide, les ténèbres couvraient l'abîme, et l'Esprit de Dieu se mouvait au-dessus des eaux.",
-      },
-      { verse: 3, text: 'Dieu dit : Que la lumière soit ! Et la lumière fut.' },
-      {
-        verse: 4,
-        text: "Dieu vit que la lumière était bonne ; et Dieu sépara la lumière d'avec les ténèbres.",
-      },
-    ],
-  },
-  {
-    label: 'Psaume 23',
-    content: [
-      { verse: 1, text: "L'Éternel est mon berger : je ne manquerai de rien." },
-      {
-        verse: 2,
-        text: 'Il me fait reposer dans de verts pâturages, Il me dirige près des eaux paisibles.',
-      },
-      {
-        verse: 3,
-        text: 'Il restaure mon âme, Il me conduit dans les sentiers de la justice, à cause de son nom.',
-      },
-    ],
-  },
-  {
-    label: 'Jean 3',
-    content: [
-      {
-        verse: 1,
-        text: 'Il y avait parmi les pharisiens un homme appelé Nicodème, un chef des Juifs.',
-      },
-      {
-        verse: 2,
-        text: "Cet homme vint auprès de Jésus de nuit, et lui dit : Rabbi, nous savons que tu es un docteur venu de Dieu ; car personne ne peut faire les miracles que tu fais, si Dieu n'est pas avec lui.",
-      },
-    ],
-  },
-];
-
-export function ReadingPanel() {
+export function ReadingPanel({ tabs }: { tabs: TabData[] }) {
   const [active, setActive] = useState(0);
+  // State for font size (defaulting to 17px as per your current setup)
+  const [fontSize, setFontSize] = useState(17);
+
+  const adjustSize = (delta: number) => {
+    setFontSize((prev) => Math.min(Math.max(prev + delta, 12), 32)); // Clamped between 12px and 32px
+  };
+
+  if (tabs.length === 0) {
+    return (
+      <p className='text-base-content/40 text-sm'>Aucune lecture trouvée pour aujourd&apos;hui.</p>
+    );
+  }
 
   return (
     <div className='max-w-2xl'>
-      {/* Tab bar */}
-      <div className='flex gap-1.5 p-1.5 bg-base-200 rounded-xl w-fit overflow-x-auto mb-8'>
-        {tabs.map((tab, i) => (
+      {/* Tab bar and Controls */}
+      <div className='sticky top-20 z-10 flex flex-row items-start justify-between mb-8'>
+        <div className='flex gap-1.5 p-1.5 bg-base-200 rounded-xl w-fit overflow-x-auto'>
+          {tabs.map((tab, i) => (
+            <button
+              key={tab.label}
+              onClick={() => {
+                setActive(i);
+                // Smooth scroll to the top of the page
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className={`px-4 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-all cursor-pointer ${
+                active === i
+                  ? 'bg-primary text-primary-content font-semibold shadow-sm'
+                  : 'text-base-content/40 hover:text-base-content/60 hover:bg-base-300/60'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Text Size Controls */}
+        <div className='join bg-base-200 p-1 rounded-xl shadow-sm border border-base-300/50'>
           <button
-            key={tab.label}
-            onClick={() => setActive(i)}
-            className={`px-4 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-all cursor-pointer ${
-              active === i
-                ? 'bg-primary text-primary-content font-semibold shadow-sm'
-                : 'text-base-content/40 hover:text-base-content/60 hover:bg-base-300/60'
-            }`}
+            onClick={() => adjustSize(-1)}
+            className='btn btn-ghost btn-xs join-item font-bold'
+            title='Diminuer la taille'
           >
-            {tab.label}
+            A-
           </button>
-        ))}
+          <div className='join-item px-2 flex items-center justify-center border-x border-base-300/50'>
+            <span className='text-[10px] font-mono opacity-50'>{fontSize}px</span>
+          </div>
+          <button
+            onClick={() => adjustSize(1)}
+            className='btn btn-ghost btn-xs join-item font-bold'
+            title='Augmenter la taille'
+          >
+            A+
+          </button>
+        </div>
       </div>
 
       {/* Reading content */}
       <div key={active} className='animate-tab'>
-        <div className='font-serif text-[17px] leading-[2.1] text-base-content text-justify'>
+        {/* Dynamic style attribute applies the font size */}
+        <div
+          className='font-serif text-base-content flex flex-col gap-6'
+          style={{ fontSize: `${fontSize}px` }}
+        >
           {tabs[active].content.map((v) => (
-            <span key={v.verse} className='inline mr-1.5'>
-              {/* Verse marker using your theme's primary color */}
-              <span className='text-primary font-bold text-[11px] mr-1 select-none align-super'>
+            <p key={v.verse} className='leading-[1.8] text-justify'>
+              <span
+                className='text-primary font-bold mr-2 select-none align-super'
+                style={{ fontSize: '0.65em' }} // Keeps verse number relative to text size
+              >
                 {v.verse}
               </span>
               <span className='opacity-90'>{v.text}</span>
-            </span>
+            </p>
           ))}
         </div>
       </div>
