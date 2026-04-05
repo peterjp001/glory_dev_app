@@ -1,5 +1,13 @@
 import Link from 'next/link';
-import { ArrowDown, LucideIcon, LayoutDashboardIcon, LogOut, User2, Wrench } from 'lucide-react';
+import {
+  ArrowDown,
+  LucideIcon,
+  LayoutDashboardIcon,
+  LogOut,
+  User2,
+  Wrench,
+  Book,
+} from 'lucide-react';
 
 interface MenuItem {
   label: string;
@@ -61,6 +69,7 @@ const userMenuItems = [
   { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboardIcon },
   { label: 'Profil', href: '/profile', icon: User2 },
   { label: 'Paramètres', href: '/settings', icon: Wrench },
+  { label: 'Accueil/Devotion', href: '/', icon: Book },
   { label: 'Déconnexion', href: '/logout', icon: LogOut, danger: true },
 ];
 
