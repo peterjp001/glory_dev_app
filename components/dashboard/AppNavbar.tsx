@@ -14,7 +14,7 @@ export const AppNavbar = () => (
       </label>
     </div>
 
-    <div className='navbar-end gap-1'>
+    <div className='navbar-end gap-2'>
       <ThemeToggle />
       <UserDropdown />
     </div>

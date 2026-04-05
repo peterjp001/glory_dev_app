@@ -8,7 +8,7 @@ export default function ThemeToggle() {
 
   return (
     <button
-      className='btn btn-ghost rounded-full border hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-3xl'
+      className='btn btn-sm btn-ghost rounded-full border hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-xl'
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
       aria-label='Toggle theme'
       suppressHydrationWarning

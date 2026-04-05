@@ -27,9 +27,9 @@ const Navbar = () => (
       </ul>
     </div>
 
-    <div className='navbar-end'>
-      <UserDropdown />
+    <div className='navbar-end  gap-2'>
       <ThemeToggle />
+      <UserDropdown />
     </div>
   </div>
 );
