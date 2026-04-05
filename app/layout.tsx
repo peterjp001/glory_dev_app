@@ -57,7 +57,9 @@ export default function RootLayout({
       <body
         className={`${dmMono.variable} ${lora.variable} ${dmSans.variable} font-sans antialiased`}
       >
-        <CustomThemeProvider>{children}</CustomThemeProvider>
+        <CustomThemeProvider>
+          <main>{children}</main>
+        </CustomThemeProvider>
       </body>
     </html>
   );

@@ -7,7 +7,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <div className='flex justify-center pt-4 relative'>
       <div className='w-11/12 lg:w-5/6 transition-all duration-300'>
         <Navbar />
-        <main className='mt-5 min-h-screen pb-5 '>{children}</main>
+        <div className='mt-5 min-h-screen pb-5 '>{children}</div>
         <Footer />
       </div>
 

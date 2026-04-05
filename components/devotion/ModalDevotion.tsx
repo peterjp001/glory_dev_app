@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect } from 'react';
 import DevotionForm from './DevotionForm';
-import { PenBoxIcon } from 'lucide-react';
+import { PenLine, X } from 'lucide-react';
 
 const ModalDevotion = () => {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -19,40 +19,45 @@ const ModalDevotion = () => {
 
   return (
     <>
-      {/* FAB trigger — mobile only */}
+      {/* FAB — mobile only */}
       <button
         onClick={() => dialogRef.current?.showModal()}
-        className='fixed bottom-20 right-8 z-50 btn btn-xs btn-primary shadow-lg lg:hidden'
+        className='fixed bottom-24 right-6 z-50 lg:hidden flex items-center gap-2 px-4 py-3 rounded-2xl bg-primary text-primary-content  hover:brightness-105 active:scale-95 transition-all'
         aria-label='Soumettre ma dévotion'
       >
-        <PenBoxIcon className='w-5 h-5' /> Devotion
+        <PenLine className='w-4 h-4' />
+        <span className='text-sm font-semibold'>Dévotion</span>
       </button>
 
-      <dialog ref={dialogRef} className='modal modal-center sm:modal-middle'>
-        <div className='modal-box p-0 flex flex-col max-h-[90dvh] bg-base-100'>
+      <dialog ref={dialogRef} className='modal modal-bottom sm:modal-middle'>
+        <div className='modal-box p-0 flex flex-col max-h-[92dvh] sm:max-h-[85dvh] bg-base-100 rounded-t-3xl sm:rounded-2xl overflow-hidden'>
+          {/* Drag handle — mobile */}
+          <div className='flex justify-center pt-3 pb-1 sm:hidden'>
+            <div className='w-10 h-1 rounded-full bg-base-content/15' />
+          </div>
+
           {/* Header */}
-          <div className='sticky top-0 z-10 flex items-center justify-between px-5 py-4 bg-base-100 border-b border-base-content/10'>
+          <div className='flex items-center justify-between px-6 py-4 border-b border-base-content/8'>
             <div>
-              <p className='text-[11px] font-medium tracking-widest uppercase text-base-content/40'>
+              <p className='text-[10px] font-semibold tracking-widest uppercase text-primary mb-0.5'>
                 {new Date().toLocaleDateString('fr-FR', {
                   weekday: 'long',
                   day: 'numeric',
                   month: 'long',
-                  year: 'numeric',
                 })}
               </p>
-              <h3 className='font-serif text-lg font-medium text-base-content'>Ma dévotion</h3>
+              <h3 className='text-lg font-bold text-base-content'>Ma dévotion</h3>
             </div>
             <button
-              className='btn btn-ghost btn-sm btn-circle'
               onClick={() => dialogRef.current?.close()}
+              className='w-8 h-8 flex items-center justify-center rounded-full bg-base-200 hover:bg-base-300 text-base-content/50 hover:text-base-content transition-all'
             >
-              ✕
+              <X className='w-4 h-4' />
             </button>
           </div>
 
-          {/* Scrollable body */}
-          <div className='overflow-y-auto flex-1 px-5 py-4'>
+          {/* Body */}
+          <div className='overflow-y-auto flex-1 px-6 py-5'>
             <DevotionForm bare />
           </div>
         </div>

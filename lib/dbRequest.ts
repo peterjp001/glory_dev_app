@@ -177,7 +177,6 @@ export async function getChapterVerses(
 
 export async function getTodayTabs(lang: string = 'fr'): Promise<TabData[]> {
   const plan = await getTodayReadingPlan();
-  console.log("Today's reading plan:", plan);
   if (!plan) return [];
 
   const bookDict = BibleBooksDict[lang as keyof BibleBooksDictType] ?? BibleBooksDict['fr'];
