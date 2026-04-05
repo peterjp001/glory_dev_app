@@ -20,7 +20,7 @@ const Page = () => (
     {/* Hero card */}
     <div className='rounded-3xl overflow-hidden border border-base-content/8 shadow-sm bg-base-100'>
       {/* Banner */}
-      <div className='h-28 bg-gradient-to-br from-primary/20 via-primary/10 to-base-200 relative'>
+      <div className='h-28 bg-linear-to-br from-primary/20 via-primary/10 to-base-200 relative'>
         <button className='absolute top-3 right-3 btn btn-ghost btn-xs btn-circle bg-base-100/60 backdrop-blur-sm'>
           <Edit3 className='w-3.5 h-3.5' />
         </button>

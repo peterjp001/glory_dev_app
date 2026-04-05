@@ -110,8 +110,7 @@ export async function fetchCreoleBibleVersion(params: { book: number; chapter: n
 
 export interface ReadingEntry {
   book_number: number;
-  chapter_start: number;
-  chapter_end: number;
+  chapter: number | null; // null = single-chapter whole-book (Obadiah, Philemon, etc.)
   verse_start: number | null;
   verse_end: number | null;
 }
@@ -178,6 +177,7 @@ export async function getChapterVerses(
 
 export async function getTodayTabs(lang: string = 'fr'): Promise<TabData[]> {
   const plan = await getTodayReadingPlan();
+  console.log("Today's reading plan:", plan);
   if (!plan) return [];
 
   const bookDict = BibleBooksDict[lang as keyof BibleBooksDictType] ?? BibleBooksDict['fr'];
@@ -185,28 +185,24 @@ export async function getTodayTabs(lang: string = 'fr'): Promise<TabData[]> {
 
   for (const entry of plan.readings) {
     const bookName = bookDict[entry.book_number]?.name ?? `Livre ${entry.book_number}`;
-    const isSingleChapter = entry.chapter_start === entry.chapter_end;
+    const chapter = entry.chapter ?? 1; // whole-book entries: single-chapter book, use 1
 
-    if (isSingleChapter) {
-      const label =
-        entry.verse_start !== null
-          ? `${bookName} ${entry.chapter_start}.${entry.verse_start}-${entry.verse_end}`
-          : `${bookName} ${entry.chapter_start}`;
+    const label =
+      entry.verse_start !== null
+        ? `${bookName} ${chapter}.${entry.verse_start}-${entry.verse_end}`
+        : entry.chapter !== null
+          ? `${bookName} ${chapter}`
+          : bookName; // no chapter number for whole-book entries
 
-      const content = await getChapterVerses(
-        entry.book_number,
-        entry.chapter_start,
-        lang,
-        entry.verse_start ?? undefined,
-        entry.verse_end ?? undefined,
-      );
-      tabs.push({ label, content });
-    } else {
-      for (let ch = entry.chapter_start; ch <= entry.chapter_end; ch++) {
-        const content = await getChapterVerses(entry.book_number, ch, lang);
-        tabs.push({ label: `${bookName} ${ch}`, content });
-      }
-    }
+    const content = await getChapterVerses(
+      entry.book_number,
+      chapter,
+      lang,
+      entry.verse_start ?? undefined,
+      entry.verse_end ?? undefined,
+    );
+
+    tabs.push({ label, content });
   }
 
   return tabs;
